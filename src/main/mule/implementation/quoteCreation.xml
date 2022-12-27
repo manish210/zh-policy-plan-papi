@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<sub-flow name="quoteCreationSub_Flow" doc:id="a2d04a28-0d38-4b54-a9d3-f9468e616e19" >
+		<logger level="INFO" doc:name="entry logger" doc:id="e55bde4a-83c0-4810-9f4d-f44c6dcaca25" message="#[payload]"/>
+		<ee:transform doc:name="storing payload" doc:id="0ec58ab1-838d-4471-a9a0-a32c207465ca" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<http:request method="POST" doc:name="calling system API" doc:id="df22ca56-2f61-4ae5-bd8d-45cba9893cf1" config-ref="HTTP_Request_configuration" path="/quotationCreation"/>
+		<ee:transform doc:name="response payload" doc:id="30ea0f22-70ff-42d4-a7f4-18d61812f179" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="exit logger" doc:id="66fe0bf8-8ba6-40bb-bab2-a368cab3f2df" message="#[payload]"/>
+	</sub-flow>
+</mule>

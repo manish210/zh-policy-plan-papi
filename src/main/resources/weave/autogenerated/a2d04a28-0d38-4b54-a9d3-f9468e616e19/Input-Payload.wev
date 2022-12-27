@@ -1,0 +1,4 @@
+%dw 2.0
+
+type auto_a2d04a28_0d38_4b54_a9d3_f9468e616e19_Input_Payload = Array<{  fisrtName: String,   lastName: String,   returnDate: String,   dob: String,   destination: String,   emailId: String,   departureDate: String,   _?: Any}>
+
