@@ -9,7 +9,12 @@ http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/htt
         <http:listener-connection host="0.0.0.0" port="8081" />
     </http:listener-config>
     <apikit:config name="app-config" api="app.raml" outboundHeadersMapName="outboundHeaders" httpStatusVarName="httpStatus" />
-	<http:request-config name="HTTP_Request_configuration" doc:name="HTTP Request configuration" doc:id="c9543578-9e46-4a13-9735-d85003cb3f77" >
-		<http:request-connection host="localhost" port="9091" />
-	</http:request-config>
+	<http:request-config name="HTTP_Request_configuration" doc:name="HTTP Request configuration" doc:id="c9543578-9e46-4a13-9735-d85003cb3f77" basePath="${sapi.policy-plan.basePath}">
+		<http:request-connection host="${sapi.policy-plan.host}" port="${sapi.policy-plan.port}" protocol="${sapi.policy-plan.protocol}" connectionIdleTimeout="${sapi.policy-plan.timeout}"/>
+		<http:default-headers >
+			<http:default-header key="client_id" value="${sapi.policy-plan.clientSecret}" />
+			<http:default-header key="clientSecret" value="${sapi.policy-plan.clientSecret}" />
+		</http:default-headers>
+	
+</http:request-config>
 </mule>
